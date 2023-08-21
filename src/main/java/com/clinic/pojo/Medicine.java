@@ -48,15 +48,12 @@ public class Medicine implements Serializable {
     private String name;
     @Column(name = "unit_price")
     private Integer unitPrice;
+    @OneToMany(mappedBy = "medicineId")
+    @JsonIgnore
+    private Collection<MedicineUnit> medicineUnitCollection;
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne
     private Category categoryId;
-    @OneToMany(mappedBy = "medicineId")
-    @JsonIgnore
-    private Collection<ReportDetail> reportDetailCollection;
-    @OneToMany(mappedBy = "medicineId")
-    @JsonIgnore
-    private Collection<UnitMedicine> unitMedicineCollection;
 
     public Medicine() {
     }
@@ -89,30 +86,21 @@ public class Medicine implements Serializable {
         this.unitPrice = unitPrice;
     }
 
+    @XmlTransient
+    public Collection<MedicineUnit> getMedicineUnitCollection() {
+        return medicineUnitCollection;
+    }
+
+    public void setMedicineUnitCollection(Collection<MedicineUnit> medicineUnitCollection) {
+        this.medicineUnitCollection = medicineUnitCollection;
+    }
+
     public Category getCategoryId() {
         return categoryId;
     }
 
     public void setCategoryId(Category categoryId) {
         this.categoryId = categoryId;
-    }
-
-    @XmlTransient
-    public Collection<ReportDetail> getReportDetailCollection() {
-        return reportDetailCollection;
-    }
-
-    public void setReportDetailCollection(Collection<ReportDetail> reportDetailCollection) {
-        this.reportDetailCollection = reportDetailCollection;
-    }
-
-    @XmlTransient
-    public Collection<UnitMedicine> getUnitMedicineCollection() {
-        return unitMedicineCollection;
-    }
-
-    public void setUnitMedicineCollection(Collection<UnitMedicine> unitMedicineCollection) {
-        this.unitMedicineCollection = unitMedicineCollection;
     }
 
     @Override

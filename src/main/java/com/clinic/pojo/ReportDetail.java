@@ -41,16 +41,16 @@ public class ReportDetail implements Serializable {
     private Integer id;
     @Size(max = 100)
     @Column(name = "quantity")
-    private Integer quantity;
+    private String quantity;
     @Size(max = 100)
     @Column(name = "usage_info")
     private String usageInfo;
     @JoinColumn(name = "medicalreport_id", referencedColumnName = "id")
     @ManyToOne
     private MedicalReport medicalreportId;
-    @JoinColumn(name = "medicine_id", referencedColumnName = "id")
+    @JoinColumn(name = "medicine_unit_id", referencedColumnName = "id")
     @ManyToOne
-    private Medicine medicineId;
+    private MedicineUnit medicineUnitId;
 
     public ReportDetail() {
     }
@@ -67,11 +67,11 @@ public class ReportDetail implements Serializable {
         this.id = id;
     }
 
-    public Integer getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 
@@ -91,12 +91,12 @@ public class ReportDetail implements Serializable {
         this.medicalreportId = medicalreportId;
     }
 
-    public Medicine getMedicineId() {
-        return medicineId;
+    public MedicineUnit getMedicineUnitId() {
+        return medicineUnitId;
     }
 
-    public void setMedicineId(Medicine medicineId) {
-        this.medicineId = medicineId;
+    public void setMedicineUnitId(MedicineUnit medicineUnitId) {
+        this.medicineUnitId = medicineUnitId;
     }
 
     @Override

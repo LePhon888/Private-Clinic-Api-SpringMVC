@@ -128,9 +128,5 @@ public class Regulation implements Serializable {
     public String toString() {
         return "com.clinic.pojo.Regulation[ id=" + id + " ]";
     }
-
-    public Integer get(String numOfPatient) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     
 }

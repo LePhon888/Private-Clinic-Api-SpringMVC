@@ -45,7 +45,7 @@ public class Unit implements Serializable {
     private String name;
     @OneToMany(mappedBy = "unitId")
     @JsonIgnore
-    private Collection<UnitMedicine> unitMedicineCollection;
+    private Collection<MedicineUnit> medicineUnitCollection;
 
     public Unit() {
     }
@@ -71,12 +71,12 @@ public class Unit implements Serializable {
     }
 
     @XmlTransient
-    public Collection<UnitMedicine> getUnitMedicineCollection() {
-        return unitMedicineCollection;
+    public Collection<MedicineUnit> getMedicineUnitCollection() {
+        return medicineUnitCollection;
     }
 
-    public void setUnitMedicineCollection(Collection<UnitMedicine> unitMedicineCollection) {
-        this.unitMedicineCollection = unitMedicineCollection;
+    public void setMedicineUnitCollection(Collection<MedicineUnit> medicineUnitCollection) {
+        this.medicineUnitCollection = medicineUnitCollection;
     }
 
     @Override

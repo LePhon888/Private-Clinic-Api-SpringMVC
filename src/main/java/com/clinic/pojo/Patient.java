@@ -115,5 +115,5 @@ public class Patient implements Serializable {
     public String toString() {
         return "com.clinic.pojo.Patient[ id=" + id + " ]";
     }
-
+    
 }

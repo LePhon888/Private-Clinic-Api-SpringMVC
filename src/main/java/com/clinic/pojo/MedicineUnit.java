@@ -13,11 +13,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -26,14 +27,12 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author admin
  */
 @Entity
-@Table(name = "department")
+@Table(name = "medicine_unit")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Department.findAll", query = "SELECT d FROM Department d"),
-    @NamedQuery(name = "Department.findById", query = "SELECT d FROM Department d WHERE d.id = :id"),
-    @NamedQuery(name = "Department.findByName", query = "SELECT d FROM Department d WHERE d.name = :name"),
-    @NamedQuery(name = "Department.findByDetail", query = "SELECT d FROM Department d WHERE d.detail = :detail")})
-public class Department implements Serializable {
+    @NamedQuery(name = "MedicineUnit.findAll", query = "SELECT m FROM MedicineUnit m"),
+    @NamedQuery(name = "MedicineUnit.findById", query = "SELECT m FROM MedicineUnit m WHERE m.id = :id")})
+public class MedicineUnit implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,20 +40,20 @@ public class Department implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 100)
-    @Column(name = "name")
-    private String name;
-    @Size(max = 1000)
-    @Column(name = "detail")
-    private String detail;
-    @OneToMany(mappedBy = "departmentId")
+    @JoinColumn(name = "medicine_id", referencedColumnName = "id")
+    @ManyToOne
+    private Medicine medicineId;
+    @JoinColumn(name = "unit_id", referencedColumnName = "id")
+    @ManyToOne
+    private Unit unitId;
+    @OneToMany(mappedBy = "medicineUnitId")
     @JsonIgnore
-    private Collection<Doctor> doctorCollection;
+    private Collection<ReportDetail> reportDetailCollection;
 
-    public Department() {
+    public MedicineUnit() {
     }
 
-    public Department(Integer id) {
+    public MedicineUnit(Integer id) {
         this.id = id;
     }
 
@@ -66,29 +65,29 @@ public class Department implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Medicine getMedicineId() {
+        return medicineId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMedicineId(Medicine medicineId) {
+        this.medicineId = medicineId;
     }
 
-    public String getDetail() {
-        return detail;
+    public Unit getUnitId() {
+        return unitId;
     }
 
-    public void setDetail(String detail) {
-        this.detail = detail;
+    public void setUnitId(Unit unitId) {
+        this.unitId = unitId;
     }
 
     @XmlTransient
-    public Collection<Doctor> getDoctorCollection() {
-        return doctorCollection;
+    public Collection<ReportDetail> getReportDetailCollection() {
+        return reportDetailCollection;
     }
 
-    public void setDoctorCollection(Collection<Doctor> doctorCollection) {
-        this.doctorCollection = doctorCollection;
+    public void setReportDetailCollection(Collection<ReportDetail> reportDetailCollection) {
+        this.reportDetailCollection = reportDetailCollection;
     }
 
     @Override
@@ -101,10 +100,10 @@ public class Department implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Department)) {
+        if (!(object instanceof MedicineUnit)) {
             return false;
         }
-        Department other = (Department) object;
+        MedicineUnit other = (MedicineUnit) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -113,7 +112,7 @@ public class Department implements Serializable {
 
     @Override
     public String toString() {
-        return "com.clinic.pojo.Department[ id=" + id + " ]";
+        return "com.clinic.pojo.MedicineUnit[ id=" + id + " ]";
     }
     
 }

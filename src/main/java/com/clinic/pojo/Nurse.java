@@ -127,5 +127,5 @@ public class Nurse implements Serializable {
     public String toString() {
         return "com.clinic.pojo.Nurse[ id=" + id + " ]";
     }
-
+    
 }
