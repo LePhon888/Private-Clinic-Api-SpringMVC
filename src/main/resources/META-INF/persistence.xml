@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="com.clinic_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.clinic.pojo.Admin</class>
+    <class>com.clinic.pojo.Bill</class>
+    <class>com.clinic.pojo.Category</class>
+    <class>com.clinic.pojo.Department</class>
+    <class>com.clinic.pojo.Doctor</class>
+    <class>com.clinic.pojo.DoctorShift</class>
+    <class>com.clinic.pojo.Hour</class>
+    <class>com.clinic.pojo.MedicalReport</class>
+    <class>com.clinic.pojo.Medicine</class>
+    <class>com.clinic.pojo.Nurse</class>
+    <class>com.clinic.pojo.NurseShift</class>
+    <class>com.clinic.pojo.Patient</class>
+    <class>com.clinic.pojo.Regulation</class>
+    <class>com.clinic.pojo.ReportDetail</class>
+    <class>com.clinic.pojo.ScheduleDetail</class>
+    <class>com.clinic.pojo.Shift</class>
+    <class>com.clinic.pojo.Unit</class>
+    <class>com.clinic.pojo.UnitMedicine</class>
+    <class>com.clinic.pojo.User</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/saledb?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="Admin@123"/>
+    </properties>
+  </persistence-unit>
+</persistence>
