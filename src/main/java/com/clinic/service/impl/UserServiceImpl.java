@@ -15,6 +15,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.clinic.repository.UserRepository;
+import com.cloudinary.Cloudinary;
+import java.text.DateFormat;
+import java.util.Map;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
+import com.cloudinary.utils.ObjectUtils;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,6 +34,14 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    private DateFormat f;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private Cloudinary cloudinary;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -45,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUsername(String username) {
-        return null;
+        return this.userRepo.getUserByUsername(username);
     }
 
     @Override
@@ -54,8 +71,36 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(User user) {
-        return this.userRepo.createUser(user);
+    public boolean authUser(String username, String password) {
+        return this.userRepo.authUser(username, password);
+    }
+
+    @Override
+    public User createUser(Map<String, String> params, MultipartFile image) {
+        User u = new User();
+        u.setName(params.get("name"));
+        u.setBirthday(params.get("birthday"));
+        u.setAddress(params.get("address"));
+        u.setGender(params.get("gender"));
+        u.setUsername(params.get("username"));
+        u.setPhoneNumber(params.get("phoneNumber"));
+        u.setEmail(params.get("email"));
+        u.setPassword(this.passwordEncoder.encode(params.get("password")));
+        u.setUserRole("ROLE_PATIENT");
+
+        if (!image.isEmpty()) {
+            try {
+                Map res = this.cloudinary.uploader().upload(image.getBytes(), 
+                        ObjectUtils.asMap("resource_type", "auto"));
+                u.setImage(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(UserServiceImpl.class.getName())
+                        .log(Level.SEVERE, null, ex);
+            }
+        }
+
+        this.userRepo.createUser(u);
+        return u;
     }
 
 }

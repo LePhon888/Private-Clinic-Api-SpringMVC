@@ -18,6 +18,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.clinic.repository.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  *
@@ -25,40 +26,54 @@ import com.clinic.repository.UserRepository;
  */
 @Repository
 @Transactional
-public class UserRepositoryImpl implements UserRepository{
+public class UserRepositoryImpl implements UserRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
+    @Autowired
+    private BCryptPasswordEncoder passEncoder;
 
-  @Override
+    @Override
     public User getUserByName(String name) {
-    Session s = this.factory.getObject().getCurrentSession();
+        Session s = this.factory.getObject().getCurrentSession();
 
-    CriteriaBuilder b = s.getCriteriaBuilder();
-    CriteriaQuery<User> q = b.createQuery(User.class);
-    Root<User> root = q.from(User.class);
-    q.select(root);
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<User> q = b.createQuery(User.class);
+        Root<User> root = q.from(User.class);
+        q.select(root);
 
-    try {
-        Predicate predicate = b.equal(root.get("name"), name.trim());
-        q.where(predicate);
+        try {
+            Predicate predicate = b.equal(root.get("name"), name.trim());
+            q.where(predicate);
 
-        Query<User> query = s.createQuery(q);
-        return query.getSingleResult();
-    } catch (NoResultException e) {
-        // Handle the case when no user is found with the given name
-        return null; // or throw a custom exception, return a custom response, etc.
+            Query<User> query = s.createQuery(q);
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            // Handle the case when no user is found with the given name
+            return null; // or throw a custom exception, return a custom response, etc.
+        }
     }
-}
-
 
     @Override
     public User getUserByUsername(String username) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("FROM User WHERE username=:un");
-        q.setParameter("un", username);
 
-        return (User) q.getSingleResult();    }
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<User> q = b.createQuery(User.class);
+        Root<User> root = q.from(User.class);
+        q.select(root);
+
+        try {
+            Predicate predicate = b.equal(root.get("username"), username.trim());
+            q.where(predicate);
+
+            Query<User> query = s.createQuery(q);
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            // Handle the case when no user is found with the given name
+            return null; // or throw a custom exception, return a custom response, etc.
+        }
+    }
 
     @Override
     public User getUserById(int id) {
@@ -82,7 +97,7 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public User createUser(User user) {
-        Session session  = this.factory.getObject().getCurrentSession();
+        Session session = this.factory.getObject().getCurrentSession();
         try {
             session.save(user);
             return user;
@@ -92,5 +107,12 @@ public class UserRepositoryImpl implements UserRepository{
         }
     }
 
-    
+    @Override
+    public boolean authUser(String username, String password) {
+        User u = this.getUserByUsername(username);
+        
+        return this.passEncoder.matches(password, u.getPassword());
+
+    }
+
 }

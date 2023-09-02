@@ -52,10 +52,15 @@ public class MedicalReportRepositoryImpl implements MedicalReportRepository {
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
 
-            String idParam = params.get("id");
-            if (idParam != null && !idParam.isEmpty()) {
-                int id = Integer.parseInt(idParam);
-                predicates.add(b.equal(root.get("id"), id));
+            String idString = params.get("id");
+            if (idString != null) {
+                String[] ids = idString.split(",");
+                List<Integer> idList = new ArrayList<>();
+                for (String itemId : ids) {
+                    idList.add(Integer.parseInt(itemId));
+                }
+                Predicate patientIdPredicate = root.get("id").in(idList);
+                predicates.add(patientIdPredicate);
             }
 
             String fromDate = params.get("fromDate");
@@ -67,17 +72,94 @@ public class MedicalReportRepositoryImpl implements MedicalReportRepository {
                     Date parsedFromDate = f.parse(fromDate);
                     Date parsedToDate = f.parse(toDate);
 
-                    // Adjust the range to include the entire day of fromDate and toDate
                     Predicate dateRangePredicate = b.between(root.get("createdDate"), parsedFromDate, parsedToDate);
                     predicates.add(dateRangePredicate);
                 } catch (ParseException ex) {
                     Logger.getLogger(MedicalReportRepositoryImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                q.where(predicates.toArray(new Predicate[0]));
             }
+
+            String patientId = params.get("patientId");
+            if (patientId != null) {
+                String[] patientIds = patientId.split(",");
+                List<Integer> parsedPatientIds = new ArrayList<>();
+                for (String id : patientIds) {
+                    parsedPatientIds.add(Integer.parseInt(id));
+                }
+                Predicate patientIdPredicate = root.get("patientId").in(parsedPatientIds);
+                predicates.add(patientIdPredicate);
+            }
+
+            String isPaid = params.get("isPaid");
+            if (isPaid != null) {
+                Predicate isPaidPredicate = b.equal(
+                        root.get("isPaid"),
+                        Integer.parseInt(isPaid));
+                predicates.add(isPaidPredicate);
+            }
+
+            q.where(predicates.toArray(new Predicate[0]));
+
         }
         Query<MedicalReport> query = session.createQuery(q);
         return query.getResultList();
     }
+
+    @Override
+    public MedicalReport getMedicalReportById(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<MedicalReport> q = b.createQuery(MedicalReport.class);
+        Root<MedicalReport> root = q.from(MedicalReport.class);
+        q.select(root);
+        try {
+            Predicate predicate1 = b.equal(root.get("id"), id);
+            q.where(predicate1);
+        } catch (Exception ex) {
+            Logger.getLogger(MedicalReportRepositoryImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Query<MedicalReport> query = session.createQuery(q);
+        return query.getSingleResult();
+    }
+
+    @Override
+    public Boolean updatePaid(Map<String, String> params) {
+    Session session = this.factory.getObject().getCurrentSession();
+    
+    try {
+        List<Integer> idList = new ArrayList<>();
+        String idString = params.get("id");
+        
+        if (idString != null) {
+            String[] idStrings = idString.split(",");
+            
+            for (String id : idStrings) {
+                idList.add(Integer.parseInt(id));
+            }
+            
+            for (int id : idList) {
+                MedicalReport updatedMedicalReport = this.getMedicalReportById(id);
+                
+                if (updatedMedicalReport != null) {
+                    Short isPaid = 1;
+                    updatedMedicalReport.setIsPaid(isPaid);
+                    session.update(updatedMedicalReport);
+                } else {
+                    System.err.println("Can not found medical report");
+                }
+            }
+            
+            return true;  
+        }
+    } catch (NumberFormatException e) {
+        e.printStackTrace();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    
+    return false;  
+}
+
+
 }

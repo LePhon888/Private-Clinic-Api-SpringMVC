@@ -57,7 +57,7 @@ public class HibernateConfig {
     private Properties hibernateProperties() {
         Properties props = new Properties();
         props.put(DIALECT, env.getProperty("hibernate.dialect"));
-        props.put(SHOW_SQL, env.getProperty("hibernate.showSql"));
+//        props.put(SHOW_SQL, env.getProperty("hibernate.showSql"));
         return props;
     }
 

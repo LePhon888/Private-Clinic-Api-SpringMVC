@@ -22,13 +22,18 @@ public class StatsServiceImpl implements StatsService{
     private StatsRepository statsRepository;
     
     @Override
-    public List<Object[]> statsRevenue(Map<String, String> params) {
-        return this.statsRepository.statsRevenue(params);
+    public List<Object[]> feeRevenue(Map<String, String> params) {
+        return this.statsRepository.feeRevenue(params);
     }
 
     @Override
     public List<Object[]> countPatientByTime(Map<String, String> params) {
         return this.statsRepository.countPatientByTime(params);
+    }
+
+    @Override
+    public List<Object[]> medicineRevenue(Map<String, String> params) {
+        return this.statsRepository.medicineRevenue(params);
     }
     
 }

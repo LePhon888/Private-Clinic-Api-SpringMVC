@@ -49,7 +49,11 @@ public class MedicineUnit implements Serializable {
     @OneToMany(mappedBy = "medicineUnitId")
     @JsonIgnore
     private Collection<ReportDetail> reportDetailCollection;
-
+    @Column(name = "unit_price")
+    private Integer unitPrice;
+    @Column(name = "quantity")
+    private Integer quantity;
+    
     public MedicineUnit() {
     }
 
@@ -89,6 +93,15 @@ public class MedicineUnit implements Serializable {
     public void setReportDetailCollection(Collection<ReportDetail> reportDetailCollection) {
         this.reportDetailCollection = reportDetailCollection;
     }
+    
+     public Integer getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(Integer unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
 
     @Override
     public int hashCode() {
@@ -113,6 +126,20 @@ public class MedicineUnit implements Serializable {
     @Override
     public String toString() {
         return "com.clinic.pojo.MedicineUnit[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the quantity
+     */
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    /**
+     * @param quantity the quantity to set
+     */
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
     
 }

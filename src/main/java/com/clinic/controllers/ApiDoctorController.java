@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class ApiDoctorController {
     @Autowired
-    @Qualifier("doctorServiceImpl") // Specify the specific implementation
+    @Qualifier("doctorServiceImpl")
     private DoctorService doctorService;
     
     @GetMapping("/doctors")

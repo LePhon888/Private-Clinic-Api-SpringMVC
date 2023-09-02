@@ -11,6 +11,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,24 +28,35 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class ApiScheduleDetailController {
 
     @Autowired
     private ScheduleDetailService scheduleDetailService;
 
-    @GetMapping("/scheduledetails")
+    @GetMapping("/schedule-details")
     public ResponseEntity<List<ScheduleDetail>> listScheduleDetailByDate(
             @RequestParam Map<String, String> params) {
-        return new ResponseEntity<>(this.scheduleDetailService.getScheduleDetailByDate(params), HttpStatus.OK);
+        return new ResponseEntity<>(
+                this.scheduleDetailService.getScheduleDetailByDate(params), 
+                HttpStatus.OK);
+    }
+    
+    @GetMapping("/schedule-detail/{id}")
+    public ResponseEntity<ScheduleDetail> getScheduleDetailById(
+            @PathVariable int id) {
+        return new ResponseEntity<>(
+                this.scheduleDetailService.getScheduleDetailById(id), 
+                HttpStatus.OK);
     }
 
-    @PostMapping("/scheduledetail")
+    @PostMapping("/schedule-detail")
     public ResponseEntity createScheduleDetail(@RequestBody Map<String, Object> schedule) {
         this.scheduleDetailService.createScheduleDetail(schedule);
         return new ResponseEntity(HttpStatus.CREATED);
     }
     
-    @RequestMapping(value = "/scheduledetail/{id}", method = RequestMethod.PATCH)  
+    @RequestMapping(value = "/schedule-detail/{id}", method = RequestMethod.PATCH)  
     public ResponseEntity<ScheduleDetail> updateIsConfirm(
             @PathVariable int id, @RequestBody Map<String, Short> isConfirm)
     {

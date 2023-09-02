@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,6 +20,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+
 
 /**
  *
@@ -30,10 +33,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan(basePackages = {
     "com.clinic.controllers",
     "com.clinic.repository",
-    "com.clinic.service",
-    "com.clinic.configs" // Add this line to include the package containing configuration classes
+    "com.clinic.service"
 
 })
+@Order(2)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private Environment env;
@@ -56,23 +59,23 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http)
             throws Exception {
        
-         http.formLogin()
-            .loginPage("/login")
-            .usernameParameter("username")
-            .passwordParameter("password")
-            .defaultSuccessUrl("/")
-            .failureUrl("/login?error")
-            .and()
-            .logout().logoutSuccessUrl("/login")
-            .and()
-            .exceptionHandling().accessDeniedPage("/login?accessDenied")
-            .and()
-            .authorizeRequests()
-            .antMatchers("/").permitAll()
-            .antMatchers("/**/add").access("hasRole('ROLE_ADMIN')")
-            .antMatchers("/**/pay").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
-            .and()
-            .csrf().disable();
+        http.formLogin().loginPage("/login")
+                .usernameParameter("username")
+                .passwordParameter("password");
+        
+        http.formLogin().defaultSuccessUrl("/")
+                .failureUrl("/login?error");
+        
+        http.logout().logoutSuccessUrl("/login");
+        http.exceptionHandling()
+                .accessDeniedPage("/login?accessDenied");
+        
+//        http.authorizeRequests().antMatchers("/").permitAll()
+//                .antMatchers("/**/add")
+//                .access("hasRole('ROLE_ADMIN')");
+//        .antMatchers("/**/pay")
+//                .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+        http.csrf().disable();
     }
     @Bean
     public Cloudinary cloudinary() {

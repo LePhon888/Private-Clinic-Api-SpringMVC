@@ -14,4 +14,6 @@ import java.util.Map;
  */
 public interface MedicalReportRepository {
     List<MedicalReport> getMedicalReports(Map<String, String> params);
+    MedicalReport getMedicalReportById(int id);
+    Boolean updatePaid(Map<String,String> params);
 }

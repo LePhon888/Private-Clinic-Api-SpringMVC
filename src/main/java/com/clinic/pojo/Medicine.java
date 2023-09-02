@@ -33,8 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Medicine.findAll", query = "SELECT m FROM Medicine m"),
     @NamedQuery(name = "Medicine.findById", query = "SELECT m FROM Medicine m WHERE m.id = :id"),
-    @NamedQuery(name = "Medicine.findByName", query = "SELECT m FROM Medicine m WHERE m.name = :name"),
-    @NamedQuery(name = "Medicine.findByUnitPrice", query = "SELECT m FROM Medicine m WHERE m.unitPrice = :unitPrice")})
+    @NamedQuery(name = "Medicine.findByName", query = "SELECT m FROM Medicine m WHERE m.name = :name")})
 public class Medicine implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,8 +45,6 @@ public class Medicine implements Serializable {
     @Size(max = 100)
     @Column(name = "name")
     private String name;
-    @Column(name = "unit_price")
-    private Integer unitPrice;
     @OneToMany(mappedBy = "medicineId")
     @JsonIgnore
     private Collection<MedicineUnit> medicineUnitCollection;
@@ -78,14 +75,7 @@ public class Medicine implements Serializable {
         this.name = name;
     }
 
-    public Integer getUnitPrice() {
-        return unitPrice;
-    }
-
-    public void setUnitPrice(Integer unitPrice) {
-        this.unitPrice = unitPrice;
-    }
-
+   
     @XmlTransient
     public Collection<MedicineUnit> getMedicineUnitCollection() {
         return medicineUnitCollection;

@@ -11,7 +11,7 @@
 <h1 class="text-center text-info mt-1">QUẢN LÝ SẢN PHẨM</h1>
 
 <c:url value="/products" var="action" />
-<form:form method="post" action="${action}" modelAttribute="product" enctype="multipart/form-data">
+<%--<form:form method="post" action="${action}" modelAttribute="product" enctype="multipart/form-data">
     <form:errors path="*" element="div" cssClass="alert alert-danger" />
     <form:hidden path="id" />
     <form:hidden path="image" />
@@ -64,4 +64,5 @@
         </button>
     </div>
 
-</form:form>
+</form:form>--%>
+<h2>PRODUCT</h2>

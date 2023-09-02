@@ -13,5 +13,6 @@ import java.util.Map;
  */
 public interface StatsService {
     List<Object[]> countPatientByTime(Map<String,String> params);
-    List<Object[]> statsRevenue(Map<String, String> params);
+    List<Object[]> feeRevenue(Map<String, String> params);
+    List<Object[]> medicineRevenue(Map<String, String> params);
 }

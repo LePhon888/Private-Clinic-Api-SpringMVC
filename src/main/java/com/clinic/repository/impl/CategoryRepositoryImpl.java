@@ -5,9 +5,14 @@
 package com.clinic.repository.impl;
 
 import com.clinic.pojo.Category;
+import com.clinic.pojo.Department;
 import com.clinic.repository.CategoryRepository;
 import java.util.List;
-import javax.persistence.Query;
+import org.hibernate.query.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -26,9 +31,14 @@ public class CategoryRepositoryImpl implements  CategoryRepository{
 
     @Override
     public List<Category> getCategories() {
-        Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("FROM Category");
-        
-        return q.getResultList();
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+                
+        CriteriaQuery<Category> q = b.createQuery(Category.class);
+        Root<Category> root = q.from(Category.class);
+        q.select(root);
+
+        Query<Category> query = session.createQuery(q);
+        return query.getResultList();
     }
 }

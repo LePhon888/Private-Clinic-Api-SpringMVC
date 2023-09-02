@@ -25,4 +25,10 @@ public class MedicalReportServiceImpl implements MedicalReportService{
     public List<MedicalReport> getMedicalReports(Map<String, String> params) {
         return this.medicalReportRepository.getMedicalReports(params);
     }
+
+    @Override
+    public Boolean updatePaid(Map<String, String> params) {
+        return this.medicalReportRepository.updatePaid(params);
+    }
+
 }

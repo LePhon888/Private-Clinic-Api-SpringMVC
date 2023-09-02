@@ -35,9 +35,19 @@ public class ApiStatsController {
             return new ResponseEntity<>(result, HttpStatus.OK);
         }
     }
-    @GetMapping("/revenue")
-    public ResponseEntity<List<Object[]>> statsRevenue(@RequestParam Map<String, String> params) {
-        List<Object[]> result = statsService.statsRevenue(params);
+    @GetMapping("/fee-revenue")
+    public ResponseEntity<List<Object[]>> feeRevenue(@RequestParam Map<String, String> params) {
+        List<Object[]> result = statsService.feeRevenue(params);
+
+        if (result.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+    }
+    @GetMapping("/medicine-revenue")
+    public ResponseEntity<List<Object[]>> medicineRevenue(@RequestParam Map<String, String> params) {
+        List<Object[]> result = statsService.medicineRevenue(params);
 
         if (result.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

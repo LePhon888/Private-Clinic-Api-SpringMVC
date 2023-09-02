@@ -56,6 +56,8 @@ public class MedicalReport implements Serializable {
     @Column(name = "createdDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
+    @Column(name = "is_paid")
+    private Short isPaid;
     @JoinColumn(name = "bill_id", referencedColumnName = "id")
     @ManyToOne
     private Bill billId;
@@ -164,6 +166,20 @@ public class MedicalReport implements Serializable {
     @Override
     public String toString() {
         return "com.clinic.pojo.MedicalReport[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the isPaid
+     */
+    public Short getIsPaid() {
+        return isPaid;
+    }
+
+    /**
+     * @param isPaid the isPaid to set
+     */
+    public void setIsPaid(Short isPaid) {
+        this.isPaid = isPaid;
     }
     
 }

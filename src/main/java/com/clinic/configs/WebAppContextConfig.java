@@ -30,6 +30,8 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 
 
 /**
@@ -42,8 +44,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan(basePackages = {
     "com.clinic.controllers",
     "com.clinic.repository",
-    "com.clinic.service",
-    "com.clinic.configs" // Add this line to include the package containing configuration classes
+    "com.clinic.service"
 
 })
 @PropertySource("classpath:configs.properties")
@@ -69,15 +70,15 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     
     
 
-//    @Bean
-//    public InternalResourceViewResolver internalResourceViewResolver() {
-//        InternalResourceViewResolver r = new InternalResourceViewResolver();
-//        r.setViewClass(JstlView.class);
-//        r.setPrefix("/WEB-INF/pages/");
-//        r.setSuffix(".jsp");
-//        
-//        return r;
-//    }
+    @Bean
+    public InternalResourceViewResolver internalResourceViewResolver() {
+        InternalResourceViewResolver r = new InternalResourceViewResolver();
+        r.setViewClass(JstlView.class);
+        r.setPrefix("/WEB-INF/pages/");
+        r.setSuffix(".jsp");
+        
+        return r;
+    }
     @Bean
     public Cloudinary cloudinary() {
         Cloudinary cloudinary
@@ -89,24 +90,7 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         return cloudinary;
     }
 
-    @Bean
-    public JavaMailSender javaMailSender() {
-       JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587); // Use port 587 for TLS
-        mailSender.setUsername("phle8966@gmail.com");
-        mailSender.setPassword("le132132");
 
-        // Enable TLS properties
-        Properties props = new Properties();
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.transport.protocol", "smtp");
-
-        mailSender.setJavaMailProperties(props);
-
-        return mailSender;
-    }
     @Bean
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver resolver

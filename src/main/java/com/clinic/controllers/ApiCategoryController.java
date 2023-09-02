@@ -27,16 +27,10 @@ public class ApiCategoryController {
     @Autowired
     public CategoryService cateService;
     
-//    @Autowired
-//    public DepartmentService departService;
-    
     @GetMapping("/categories")
     public ResponseEntity<List<Category>> list() {
         return new ResponseEntity<>(this.cateService.getCategories(), HttpStatus.OK);
     }
     
-//    @GetMapping("/departments")
-//    public ResponseEntity<List<Department>> listDepart() {
-//        return new ResponseEntity<>(this.departService.getDepartments(), HttpStatus.OK);
-//    }
+
 }

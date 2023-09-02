@@ -28,4 +28,14 @@
         <put-attribute name="content"
                        value="/WEB-INF/pages/login.jsp" />
     </definition>
+    <definition name="patientstat" extends="baseLayout">
+        <put-attribute name="title" value="Thống kê" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/patientstat.jsp" />
+    </definition>
+    <definition name="revenuestat" extends="baseLayout">
+        <put-attribute name="title" value="Thống kê" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/revenuestat.jsp" />
+    </definition>
 </tiles-definitions>
