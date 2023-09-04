@@ -4,11 +4,16 @@
  */
 package com.clinic.controllers;
 
+import com.clinic.pojo.Patient;
+import com.clinic.pojo.ScheduleDetail;
 import com.clinic.service.PatientService;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,5 +34,13 @@ public class ApiPatientController {
     public ResponseEntity createPatient(@RequestBody Map<String, String> patient) {
         this.patientService.createPatient(patient);
         return new ResponseEntity(HttpStatus.CREATED);
+    }
+    
+    @GetMapping("/patient/{id}")
+    public ResponseEntity<Patient> getPatientById(
+            @PathVariable int id) {
+        return new ResponseEntity<>(
+                this.patientService.getPatientByUserId(id), 
+                HttpStatus.OK);
     }
 }

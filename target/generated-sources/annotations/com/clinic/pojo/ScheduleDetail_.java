@@ -9,12 +9,14 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2023-09-02T21:40:01")
+@Generated(value="EclipseLink-2.7.9.v20210604-rNA", date="2023-09-04T21:18:25")
 @StaticMetamodel(ScheduleDetail.class)
 public class ScheduleDetail_ { 
 
     public static volatile SingularAttribute<ScheduleDetail, Date> date;
     public static volatile SingularAttribute<ScheduleDetail, String> reason;
+    public static volatile SingularAttribute<ScheduleDetail, Patient> registerPatient;
+    public static volatile SingularAttribute<ScheduleDetail, Short> isCancel;
     public static volatile SingularAttribute<ScheduleDetail, Short> isConfirm;
     public static volatile SingularAttribute<ScheduleDetail, Hour> hourId;
     public static volatile SingularAttribute<ScheduleDetail, Doctor> doctorId;

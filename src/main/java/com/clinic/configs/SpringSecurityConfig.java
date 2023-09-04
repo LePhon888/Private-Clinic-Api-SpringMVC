@@ -7,6 +7,7 @@ package com.clinic.configs;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,8 +21,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 /**
  *
@@ -38,6 +40,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 })
 @Order(2)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     private Environment env;
     @Autowired
@@ -58,18 +61,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http)
             throws Exception {
-       
+
         http.formLogin().loginPage("/login")
                 .usernameParameter("username")
                 .passwordParameter("password");
-        
+
         http.formLogin().defaultSuccessUrl("/")
                 .failureUrl("/login?error");
-        
+
         http.logout().logoutSuccessUrl("/login");
         http.exceptionHandling()
                 .accessDeniedPage("/login?accessDenied");
-        
+
 //        http.authorizeRequests().antMatchers("/").permitAll()
 //                .antMatchers("/**/add")
 //                .access("hasRole('ROLE_ADMIN')");
@@ -77,6 +80,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
         http.csrf().disable();
     }
+
     @Bean
     public Cloudinary cloudinary() {
         Cloudinary cloudinary
@@ -87,9 +91,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                         "secure", true));
         return cloudinary;
     }
-    
-     @Bean
+
+    @Bean
     public SimpleDateFormat simpleDateFormat() {
         return new SimpleDateFormat("dd-MM-yyyy");
     }
+
+   
+
 }

@@ -51,6 +51,8 @@ public class ScheduleDetail implements Serializable {
     private Date date;
     @Column(name = "is_confirm")
     private Short isConfirm;
+    @Column(name = "is_cancel")
+    private Short isCancel;
     @JoinColumn(name = "doctor_id", referencedColumnName = "id")
     @ManyToOne
     private Doctor doctorId;
@@ -63,6 +65,9 @@ public class ScheduleDetail implements Serializable {
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
     @ManyToOne
     private Patient patientId;
+    @JoinColumn(name = "register_patient_id", referencedColumnName = "id")
+    @ManyToOne
+    private Patient registerPatient;
 
     public ScheduleDetail() {
     }
@@ -158,6 +163,34 @@ public class ScheduleDetail implements Serializable {
     @Override
     public String toString() {
         return "com.clinic.pojo.ScheduleDetail[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the isCancel
+     */
+    public Short getIsCancel() {
+        return isCancel;
+    }
+
+    /**
+     * @param isCancel the isCancel to set
+     */
+    public void setIsCancel(Short isCancel) {
+        this.isCancel = isCancel;
+    }
+
+    /**
+     * @return the registerPatient
+     */
+    public Patient getRegisterPatient() {
+        return registerPatient;
+    }
+
+    /**
+     * @param registerPatient the registerPatient to set
+     */
+    public void setRegisterPatient(Patient registerPatient) {
+        this.registerPatient = registerPatient;
     }
     
 }

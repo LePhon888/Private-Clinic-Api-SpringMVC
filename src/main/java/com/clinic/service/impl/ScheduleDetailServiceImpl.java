@@ -42,5 +42,15 @@ public class ScheduleDetailServiceImpl implements ScheduleDetailService{
         return this.scheduleDetailRepo.updateIsConfirm(scheduleDetailId, isConfirm);
     }
 
+    @Override
+    public Integer countScheduleDetailByDate(Map<String, String> params) {
+        return this.scheduleDetailRepo.countScheduleDetailByDate(params);
+    }
+
+    @Override
+    public Boolean updateIsCancel(int scheduleDetailId, Map<String, Short> isCancel) {
+        return this.scheduleDetailRepo.updateIsCancel(scheduleDetailId, isCancel);
+    }
+
    
 }

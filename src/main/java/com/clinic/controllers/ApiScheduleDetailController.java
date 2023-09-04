@@ -42,7 +42,15 @@ public class ApiScheduleDetailController {
                 HttpStatus.OK);
     }
     
-    @GetMapping("/schedule-detail/{id}")
+    @GetMapping("/schedule-details/count")
+    public ResponseEntity<Integer> countScheduleDetailByDate(
+            @RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(
+                this.scheduleDetailService.countScheduleDetailByDate(params), 
+                HttpStatus.OK);
+    }
+    
+    @GetMapping("/schedule-details/{id}")
     public ResponseEntity<ScheduleDetail> getScheduleDetailById(
             @PathVariable int id) {
         return new ResponseEntity<>(
@@ -50,7 +58,7 @@ public class ApiScheduleDetailController {
                 HttpStatus.OK);
     }
 
-    @PostMapping("/schedule-detail")
+    @PostMapping("/schedule-details")
     public ResponseEntity createScheduleDetail(@RequestBody Map<String, Object> schedule) {
         this.scheduleDetailService.createScheduleDetail(schedule);
         return new ResponseEntity(HttpStatus.CREATED);
@@ -62,6 +70,14 @@ public class ApiScheduleDetailController {
     {
         this.scheduleDetailService.updateIsConfirm(
                 id, isConfirm);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/schedule-detail/cancel/{id}", method = RequestMethod.PATCH)  
+    public ResponseEntity<ScheduleDetail> updateIsCancel(
+            @PathVariable int id, @RequestBody Map<String, Short> isCancel)
+    {
+        this.scheduleDetailService.updateIsCancel(id, isCancel);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

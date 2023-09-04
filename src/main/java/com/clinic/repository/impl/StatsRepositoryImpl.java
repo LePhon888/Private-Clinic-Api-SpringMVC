@@ -55,7 +55,7 @@ public class StatsRepositoryImpl implements StatsRepository {
         CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
         Root<MedicalReport> root = q.from(MedicalReport.class);
 
-        List<Expression<Integer>> groupByExpressions = new ArrayList<>(); 
+        List<Expression<Integer>> groupByExpressions = new ArrayList<>();
         List<Predicate> predicates = new ArrayList<>();
         Expression<Integer> timeExpression = null;
 
@@ -76,11 +76,16 @@ public class StatsRepositoryImpl implements StatsRepository {
         );
 
         groupByExpressions.add(timeExpression);
-
-        // Set the WHERE clause
+        
+        String yearParam = params.get("year");
+        if (yearParam != null && !yearParam.isEmpty()) {
+            Integer year = Integer.parseInt(yearParam);
+            predicates.add(b.equal(b.function("YEAR", Integer.class,
+                    root.get("createdDate")), year));
+        }
+        
         q.where(predicates.toArray(new Predicate[0]));
 
-        // Set the GROUP BY clause
         q.groupBy(groupByExpressions.toArray(new Expression<?>[0]));
 
         Query<Object[]> query = session.createQuery(q);
@@ -107,7 +112,18 @@ public class StatsRepositoryImpl implements StatsRepository {
             timeExpression = cb.function("MONTH",
                     Integer.class, medicalReportRoot.get("createdDate"));
         }
-
+        
+        List<Predicate> predicates = new ArrayList<>();
+        String yearParam = params.get("year");
+        if (yearParam != null && !yearParam.isEmpty()) {
+            Integer year = Integer.parseInt(yearParam);
+            predicates.add(cb.equal(cb.function("YEAR", Integer.class,
+                    medicalReportRoot.get("createdDate")), year));
+        }
+        
+        //isPaid == 1 
+        predicates.add(cb.equal(medicalReportRoot.get("isPaid"), 1));
+        
         Expression<Double> feeCoalesceExpression = cb.coalesce(regulationJoin.get("fee").as(Double.class), 0.0);
         Expression<Long> countExpression = cb.count(medicalReportRoot.get("id"));
 
@@ -116,7 +132,10 @@ public class StatsRepositoryImpl implements StatsRepository {
                 cb.prod(feeCoalesceExpression, countExpression)
         );
 
+        query.where(predicates.toArray(new Predicate[0]));
         query.groupBy(timeExpression, feeCoalesceExpression);
+        
+        
         query.orderBy(cb.asc(timeExpression));
 
         List<Object[]> resultList = session.createQuery(query).getResultList();
@@ -125,7 +144,6 @@ public class StatsRepositoryImpl implements StatsRepository {
 
     }
 
-
     @Override
     public List<Object[]> medicineRevenue(Map<String, String> params) {
         Session session = this.factory.getObject().getCurrentSession();
@@ -133,14 +151,14 @@ public class StatsRepositoryImpl implements StatsRepository {
         CriteriaQuery<Object[]> query = cb.createQuery(Object[].class);
 
         Root<ReportDetail> reportDetailRoot = query.from(ReportDetail.class);
-        
+
         Join<ReportDetail, MedicalReport> medicalReportJoin
                 = reportDetailRoot.join("medicalreportId");
         Join<ReportDetail, MedicineUnit> medicineUnitJoin
                 = reportDetailRoot.join("medicineUnitId");
 
         Expression<Integer> timeExpression = null;
-        
+
         String time = params.get("time");
         if (time != null && !time.isEmpty()) {
             timeExpression = cb.function(
@@ -155,6 +173,18 @@ public class StatsRepositoryImpl implements StatsRepository {
             );
         }
 
+        List<Predicate> predicates = new ArrayList<>();
+        String yearParam = params.get("year");
+        if (yearParam != null && !yearParam.isEmpty()) {
+            Integer year = Integer.parseInt(yearParam);
+            predicates.add(cb.equal(cb.function("YEAR", Integer.class,
+                    medicalReportJoin.get("createdDate")), year));
+        }
+        
+         
+        //isPaid == 1 
+        predicates.add(cb.equal(medicalReportJoin.get("isPaid"), 1));
+        
         Expression<Double> revenueExpression = cb.sum(
                 cb.prod(
                         cb.coalesce(reportDetailRoot.get("quantity")
@@ -168,6 +198,9 @@ public class StatsRepositoryImpl implements StatsRepository {
                 timeExpression,
                 revenueExpression
         );
+        
+        query.where(predicates.toArray(new Predicate[0]));
+        
         query.groupBy(timeExpression);
 
         query.orderBy(cb.asc(timeExpression));

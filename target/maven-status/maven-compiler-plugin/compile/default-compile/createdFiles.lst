@@ -19,6 +19,7 @@ com\clinic\service\UserService.class
 com\clinic\repository\MedicalReportRepository.class
 com\clinic\configs\SpringSecurityConfig.class
 com\clinic\pojo\Doctor_.class
+com\clinic\configs\CorsConfig.class
 com\clinic\configs\DispatcherServletInit.class
 com\clinic\controllers\ApiPatientController.class
 com\clinic\pojo\Nurse_.class

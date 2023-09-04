@@ -33,7 +33,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-
 /**
  *
  * @author admin
@@ -67,8 +66,6 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
     }
-    
-    
 
     @Bean
     public InternalResourceViewResolver internalResourceViewResolver() {
@@ -76,9 +73,10 @@ public class WebAppContextConfig implements WebMvcConfigurer {
         r.setViewClass(JstlView.class);
         r.setPrefix("/WEB-INF/pages/");
         r.setSuffix(".jsp");
-        
+
         return r;
     }
+
     @Bean
     public Cloudinary cloudinary() {
         Cloudinary cloudinary
@@ -89,7 +87,6 @@ public class WebAppContextConfig implements WebMvcConfigurer {
                         "secure", true));
         return cloudinary;
     }
-
 
     @Bean
     public CommonsMultipartResolver multipartResolver() {
@@ -120,10 +117,6 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     public Validator getValidator() {
         return validator();
     }
-    
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
-    
-    }
+
 }
+

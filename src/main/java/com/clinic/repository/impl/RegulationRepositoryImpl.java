@@ -56,6 +56,7 @@ public class RegulationRepositoryImpl implements RegulationRepository {
         Root root = q.from(Regulation.class);
         q.select(root);
         
+        q.orderBy(b.desc(root.get("id"))); // Assuming "id" is your primary key
         Query query = session.createQuery(q);
         query.setMaxResults(1);
         return (Regulation) query.uniqueResult();    

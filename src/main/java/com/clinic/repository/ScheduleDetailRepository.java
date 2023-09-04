@@ -13,7 +13,9 @@ import java.util.Map;
  */
 public interface ScheduleDetailRepository {
     List<ScheduleDetail> getScheduleDetailByDate(Map<String, String> params);
+    Integer countScheduleDetailByDate(Map<String, String> params);
     Boolean createScheduleDetail(Map<String, Object> schedule);
     ScheduleDetail getScheduleDetailById(int id);
     Boolean updateIsConfirm(int scheduleDetailId, Map<String, Short> isConfirm);
+    Boolean updateIsCancel(int scheduleDetailId, Map<String, Short> isCancel);
 }

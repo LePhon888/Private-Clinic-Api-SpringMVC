@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
-@CrossOrigin
 public class ApiMedicalReportController {
     @Autowired
     private MedicalReportService medicalReportService;

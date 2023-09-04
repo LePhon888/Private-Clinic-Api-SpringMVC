@@ -57,7 +57,6 @@ public class ApiUserController {
     }
     
     @PostMapping("/login/")
-    @CrossOrigin
     public ResponseEntity<String> login(@RequestBody User user) {
         if (this.userService.authUser(user.getUsername(), user.getPassword()) == true) {
             String token = this.jwtService.generateTokenLogin(user.getUsername());
@@ -70,7 +69,6 @@ public class ApiUserController {
     @PostMapping(path = "/users/",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    @CrossOrigin
     public ResponseEntity<User> addUser(
             @RequestParam Map<String, String> params,
             @RequestPart MultipartFile image) {
@@ -80,7 +78,6 @@ public class ApiUserController {
     
     @GetMapping(path = "/current-user/", 
             produces = MediaType.APPLICATION_JSON_VALUE)
-    @CrossOrigin
     public ResponseEntity<User> details(Principal user) {
         User u = this.userService.getUserByUsername(user.getName());
         return new ResponseEntity<>(u, HttpStatus.OK);

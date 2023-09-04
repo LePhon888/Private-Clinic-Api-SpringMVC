@@ -13,8 +13,10 @@ import java.util.Map;
  * @author admin
  */
 public interface ScheduleDetailService {
+    Integer countScheduleDetailByDate(Map<String, String> params);
     List<ScheduleDetail> getScheduleDetailByDate(Map<String, String> params);
     Boolean createScheduleDetail(Map<String, Object> schedule);
     ScheduleDetail getScheduleDetailById(int id);
     Boolean updateIsConfirm(int scheduleDetailId, Map<String, Short> isConfirm);
+    Boolean updateIsCancel(int scheduleDetailId, Map<String, Short> isCancel);
 }

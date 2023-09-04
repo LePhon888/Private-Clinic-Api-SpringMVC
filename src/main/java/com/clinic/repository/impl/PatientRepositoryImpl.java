@@ -5,13 +5,19 @@
 package com.clinic.repository.impl;
 
 import com.clinic.pojo.Patient;
+import com.clinic.pojo.ScheduleDetail;
 import com.clinic.pojo.User;
 import com.clinic.repository.PatientRepository;
 import com.clinic.repository.UserRepository;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Map;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -60,6 +66,23 @@ public class PatientRepositoryImpl implements PatientRepository {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public Patient getPatientByUserId(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Patient> q = b.createQuery(Patient.class);
+        Root<Patient> root = q.from(Patient.class);
+        q.select(root);
+
+        try {
+            Predicate predicate = b.equal(root.get("userId"), id);
+            q.where(predicate);
+        } catch (Exception e) {
+        }
+        Query<Patient> query = session.createQuery(q);
+        return query.getSingleResult();
     }
 
 }

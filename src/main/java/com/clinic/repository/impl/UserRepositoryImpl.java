@@ -6,6 +6,7 @@ package com.clinic.repository.impl;
 
 import com.clinic.pojo.User;
 import com.clinic.pojo.Doctor;
+import com.clinic.pojo.Patient;
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -49,9 +50,7 @@ public class UserRepositoryImpl implements UserRepository {
             Query<User> query = s.createQuery(q);
             return query.getSingleResult();
         } catch (NoResultException e) {
-            // Handle the case when no user is found with the given name
-            return null; // or throw a custom exception, return a custom response, etc.
-        }
+            return null;         }
     }
 
     @Override
@@ -70,8 +69,7 @@ public class UserRepositoryImpl implements UserRepository {
             Query<User> query = s.createQuery(q);
             return query.getSingleResult();
         } catch (NoResultException e) {
-            // Handle the case when no user is found with the given name
-            return null; // or throw a custom exception, return a custom response, etc.
+            return null; 
         }
     }
 
@@ -90,16 +88,18 @@ public class UserRepositoryImpl implements UserRepository {
             Query<User> query = s.createQuery(q);
             return query.getSingleResult();
         } catch (NoResultException e) {
-            // Handle the case when no user is found with the given name
-            return null; // or throw a custom exception, return a custom response, etc.
+            return null; 
         }
     }
 
     @Override
     public User createUser(User user) {
         Session session = this.factory.getObject().getCurrentSession();
+        Patient patient = new Patient();
         try {
+            patient.setUserId(user);
             session.save(user);
+            session.save(patient);
             return user;
         } catch (Exception e) {
             e.printStackTrace();

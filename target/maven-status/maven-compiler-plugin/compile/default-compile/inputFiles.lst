@@ -77,6 +77,7 @@ D:\Study\LapTrinhJava_SpringFramework\BaiTapLon\Private_Clinic_Api\SaleAppV1\src
 D:\Study\LapTrinhJava_SpringFramework\BaiTapLon\Private_Clinic_Api\SaleAppV1\src\main\java\com\clinic\configs\SecurityWebApplicationInitializer.java
 D:\Study\LapTrinhJava_SpringFramework\BaiTapLon\Private_Clinic_Api\SaleAppV1\src\main\java\com\clinic\pojo\User.java
 D:\Study\LapTrinhJava_SpringFramework\BaiTapLon\Private_Clinic_Api\SaleAppV1\src\main\java\com\clinic\service\HourService.java
+D:\Study\LapTrinhJava_SpringFramework\BaiTapLon\Private_Clinic_Api\SaleAppV1\src\main\java\com\clinic\configs\CorsConfig.java
 D:\Study\LapTrinhJava_SpringFramework\BaiTapLon\Private_Clinic_Api\SaleAppV1\src\main\java\com\clinic\repository\impl\ScheduleDetailRepositoryImpl.java
 D:\Study\LapTrinhJava_SpringFramework\BaiTapLon\Private_Clinic_Api\SaleAppV1\src\main\java\com\clinic\repository\impl\HourRepositoryImpl.java
 D:\Study\LapTrinhJava_SpringFramework\BaiTapLon\Private_Clinic_Api\SaleAppV1\src\main\java\com\clinic\service\impl\DoctorShiftServiceImpl.java
