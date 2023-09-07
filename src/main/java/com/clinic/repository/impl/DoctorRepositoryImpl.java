@@ -69,6 +69,23 @@ public class DoctorRepositoryImpl implements DoctorRepository {
         Query<Doctor> query = session.createQuery(q);
         return query.getSingleResult();
     }
+    
+     @Override
+    public Doctor getDoctorByUserId(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Doctor> q = b.createQuery(Doctor.class);
+        Root<Doctor> root = q.from(Doctor.class);
+        q.select(root);
+
+        try {
+            Predicate predicate = b.equal(root.get("userId"), id);
+            q.where(predicate);
+        } catch (Exception e) {
+        }
+        Query<Doctor> query = session.createQuery(q);
+        return query.getSingleResult();
+    }
 
     @Override
     public Boolean createDoctor(Doctor doctor) {

@@ -5,6 +5,7 @@
 package com.clinic.repository;
 
 import com.clinic.pojo.Patient;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,5 +14,7 @@ import java.util.Map;
  */
 public interface PatientRepository {
     Boolean createPatient(Map<String, String> patient);
+    List<Patient> getAllPatients(Map<String, Object> params);
     Patient getPatientByUserId(int id);
+    Patient getById(int id);
 }

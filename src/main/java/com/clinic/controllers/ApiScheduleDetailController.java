@@ -33,7 +33,7 @@ public class ApiScheduleDetailController {
 
     @Autowired
     private ScheduleDetailService scheduleDetailService;
-
+@CrossOrigin
     @GetMapping("/schedule-details")
     public ResponseEntity<List<ScheduleDetail>> listScheduleDetailByDate(
             @RequestParam Map<String, String> params) {
@@ -41,7 +41,7 @@ public class ApiScheduleDetailController {
                 this.scheduleDetailService.getScheduleDetailByDate(params), 
                 HttpStatus.OK);
     }
-    
+    @CrossOrigin
     @GetMapping("/schedule-details/count")
     public ResponseEntity<Integer> countScheduleDetailByDate(
             @RequestParam Map<String, String> params) {
@@ -49,7 +49,7 @@ public class ApiScheduleDetailController {
                 this.scheduleDetailService.countScheduleDetailByDate(params), 
                 HttpStatus.OK);
     }
-    
+    @CrossOrigin
     @GetMapping("/schedule-details/{id}")
     public ResponseEntity<ScheduleDetail> getScheduleDetailById(
             @PathVariable int id) {
@@ -57,7 +57,7 @@ public class ApiScheduleDetailController {
                 this.scheduleDetailService.getScheduleDetailById(id), 
                 HttpStatus.OK);
     }
-
+@CrossOrigin
     @PostMapping("/schedule-details")
     public ResponseEntity createScheduleDetail(@RequestBody Map<String, Object> schedule) {
         this.scheduleDetailService.createScheduleDetail(schedule);

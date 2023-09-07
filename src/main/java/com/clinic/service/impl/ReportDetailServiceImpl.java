@@ -4,9 +4,9 @@
  */
 package com.clinic.service.impl;
 
-import com.clinic.pojo.Medicine;
-import com.clinic.repository.MedicineRepository;
-import com.clinic.service.MedicineService;
+import com.clinic.pojo.ReportDetail;
+import com.clinic.repository.ReportDetailRepository;
+import com.clinic.service.ReportDetailService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +14,16 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author admin
+ * @author hp
  */
 @Service
-public class MedicineServiceImpl implements MedicineService{
-
+public class ReportDetailServiceImpl implements ReportDetailService {
     @Autowired
-    private MedicineRepository medicineRepository;
+    private ReportDetailRepository reportDetailRepository;
     
     @Override
-    public List<Medicine> getAllMedicine(Map<String, String> params) {
-        return this.medicineRepository.getAllMedicine(params);
+    public List<ReportDetail> getReportDetailByReport(Map<String, Object> params) {
+        return this.reportDetailRepository.getReportDetailByReport(params);
     }
     
 }

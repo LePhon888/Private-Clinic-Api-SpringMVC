@@ -3,13 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.clinic.controllers;
-
-import com.clinic.pojo.Medicine;
-import com.clinic.service.MedicineService;
+import com.clinic.pojo.ReportDetail;
+import com.clinic.service.ReportDetailService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.server.Http2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,13 +22,14 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
-public class ApiMedicineController {
+public class ApiReportDetailController {
     @Autowired
-    private MedicineService medicineService;
+    private ReportDetailService reportDetailService;
     
-    @CrossOrigin
-    @GetMapping("/medicines/")
-    public ResponseEntity<List<Medicine>> getAllMedicine(@RequestParam Map<String, String> params) {
-        return new ResponseEntity<>(this.medicineService.getAllMedicine(params), HttpStatus.OK);
+   @CrossOrigin
+   @GetMapping("/report-details/")
+    public ResponseEntity<List<ReportDetail>> getReportDetail(
+            @RequestParam Map<String, Object> params) {
+        return new ResponseEntity<>(this.reportDetailService.getReportDetailByReport(params), HttpStatus.OK);
     }
 }

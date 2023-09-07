@@ -8,7 +8,9 @@ import com.clinic.pojo.DoctorShift;
 import com.clinic.pojo.Hour;
 import com.clinic.pojo.Medicine;
 import com.clinic.repository.MedicineRepository;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -32,13 +34,32 @@ public class MedicineRepositoryImpl implements MedicineRepository {
     @Autowired
     private LocalSessionFactoryBean factory;
 
-    @Override
-    public List<Medicine> getAllMedicine() {
+   @Override
+    public List<Medicine> getAllMedicine(Map<String, String> params) {
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Medicine> q = b.createQuery(Medicine.class);
-        Root root = q.from(Medicine.class);
+        Root<Medicine> root = q.from(Medicine.class);
         q.select(root);
+        
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList();
+            
+            String cateId = params.getOrDefault("cateId", "");
+            if (cateId != null && !cateId.isEmpty()) {
+                predicates.add(b.equal(root.get("categoryId").get("id"), Integer.valueOf(cateId)));
+               q.where(predicates.toArray(new Predicate[]{}));
+                
+            }
+            
+            String name = params.getOrDefault("name", "");
+            if (name != null && !name.isEmpty()) {
+                          predicates.add(b.like(root.get("name"), String.format("%%%s%%", name)));
+               q.where(predicates.toArray(new Predicate[]{}));
+                
+            }
+        }
+        
         Query query = session.createQuery(q);
         return query.getResultList();
     }

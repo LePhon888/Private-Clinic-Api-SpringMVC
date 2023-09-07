@@ -7,6 +7,7 @@ package com.clinic.service.impl;
 import com.clinic.pojo.Patient;
 import com.clinic.repository.PatientRepository;
 import com.clinic.service.PatientService;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,13 @@ public class PatientServiceImpl implements PatientService{
     @Override
     public Patient getPatientByUserId(int id) {
         return this.patientRepository.getPatientByUserId(id);
+    }
+    
+    
+
+    @Override
+    public List<Patient> getAllPatients(Map<String, Object> params) {
+        return this.patientRepository.getAllPatients(params);
     }
     
 }

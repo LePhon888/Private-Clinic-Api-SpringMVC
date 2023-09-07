@@ -3,10 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.clinic.service.impl;
-
-import com.clinic.pojo.Medicine;
-import com.clinic.repository.MedicineRepository;
-import com.clinic.service.MedicineService;
+import com.clinic.pojo.Unit;
+import com.clinic.repository.UnitRepository;
+import com.clinic.service.UnitService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +13,16 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author admin
+ * @author hp
  */
 @Service
-public class MedicineServiceImpl implements MedicineService{
-
+public class UnitServiceImpl implements UnitService{
     @Autowired
-    private MedicineRepository medicineRepository;
-    
+    private UnitRepository unitRepository;
+
     @Override
-    public List<Medicine> getAllMedicine(Map<String, String> params) {
-        return this.medicineRepository.getAllMedicine(params);
+    public List<Unit> getUnits(Map<String, String> params) {
+        return this.unitRepository.getUnits(params);
     }
     
 }

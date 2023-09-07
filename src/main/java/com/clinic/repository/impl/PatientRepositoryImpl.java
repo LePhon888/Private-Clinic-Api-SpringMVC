@@ -11,6 +11,8 @@ import com.clinic.repository.PatientRepository;
 import com.clinic.repository.UserRepository;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -83,6 +85,51 @@ public class PatientRepositoryImpl implements PatientRepository {
         }
         Query<Patient> query = session.createQuery(q);
         return query.getSingleResult();
+    }
+
+   @Override
+    public Patient getById(int id) {
+        Session session = factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Patient> query = builder.createQuery(Patient.class);
+        Root<Patient> root = query.from(Patient.class);
+        query.select(root);
+        try {
+            Predicate predicate = builder.equal(root.get("id"), id);
+            query.where(predicate);
+        } catch (NumberFormatException e) {
+        }
+
+        Query<Patient> q = session.createQuery(query);
+        return q.getSingleResult();
+
+    }
+    
+    @Override
+    public List<Patient> getAllPatients(Map<String, Object> params) {
+        Session session = factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Patient> query = builder.createQuery(Patient.class);
+        Root<Patient> root = query.from(Patient.class);
+
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+
+            String patientName = params.getOrDefault("patientName", "").toString().trim();
+            if (!patientName.isEmpty()) {
+              predicates.add(builder.like(root.get("userId").get("name"), String.format("%%%s%%", patientName)));
+            }
+            
+             String patientId = params.getOrDefault("id", "").toString().trim();
+            if (!patientId.isEmpty()) {
+              predicates.add(builder.equal(root.get("id"), patientId));
+            }
+            
+            query.where(predicates.toArray(new Predicate[]{}));
+        }
+        query.select(root);
+        Query<Patient> q = session.createQuery(query);
+        return q.getResultList();
     }
 
 }

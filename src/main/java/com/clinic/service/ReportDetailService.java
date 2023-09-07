@@ -4,15 +4,14 @@
  */
 package com.clinic.service;
 
-import com.clinic.pojo.Medicine;
+import com.clinic.pojo.ReportDetail;
 import java.util.List;
 import java.util.Map;
 
 /**
  *
- * @author admin
+ * @author hp
  */
-public interface MedicineService {
-    List<Medicine> getAllMedicine(Map<String, String> params);
-
+public interface ReportDetailService {
+    List<ReportDetail> getReportDetailByReport(Map<String, Object> params);
 }

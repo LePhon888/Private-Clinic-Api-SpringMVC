@@ -75,6 +75,12 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/doctors").access("hasRole('ROLE_PATIENT')")
                 .antMatchers(HttpMethod.GET, "/api/hours").access("hasRole('ROLE_PATIENT')")
                 .antMatchers(HttpMethod.GET, "/api/medical-report").access("hasRole('ROLE_DOCTOR') or hasRole('ROLE_NURSE')")
+                .antMatchers(HttpMethod.GET, "/api/report-details/**").access("hasRole('ROLE_DOCTOR')")
+                .antMatchers(HttpMethod.POST, "/api/medical-report/").access("hasRole('ROLE_DOCTOR')")
+
+                .antMatchers(HttpMethod.GET, "/api/patient").access("hasRole('ROLE_DOCTOR')")
+
+                
                 .antMatchers(HttpMethod.PATCH, "/api/medical-report").access("hasRole('ROLE_DOCTOR') or hasRole('ROLE_NURSE')")
                 .antMatchers(HttpMethod.GET, "/api/medicines").access("hasRole('ROLE_DOCTOR') or hasRole('ROLE_NURSE')")
                 .antMatchers(HttpMethod.GET, "/api/medicine-unit").access("hasRole('ROLE_DOCTOR') or hasRole('ROLE_NURSE')")
@@ -88,16 +94,25 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
                 
                 .antMatchers(HttpMethod.GET, "/api/schedule-details?patientId=")
                 .access("hasRole('ROLE_PATIENT')")
-                
                 .antMatchers(HttpMethod.POST, "/api/schedule-details/")
                 .access("hasRole('ROLE_PATIENT') or hasRole('ROLE_NURSE')")
+                
+                .antMatchers(HttpMethod.GET, "/api/schedule-details/")
+                .access("hasRole('ROLE_NURSE')")
+                
                 .antMatchers(HttpMethod.GET, "/api/schedule-details/count").access("hasRole('ROLE_PATIENT') or hasRole('ROLE_NURSE')")
                 .antMatchers(HttpMethod.PATCH, "/api/schedule-details/cancel/**").access("hasRole('ROLE_PATIENT')")
                 .antMatchers(HttpMethod.PATCH, "/api/schedule-details/").access("hasRole('ROLE_NURSE')")
                 .antMatchers(HttpMethod.GET, "/api/new-regulation").access("hasRole('ROLE_PATIENT') or hasRole('ROLE_NURSE')")
                 .antMatchers(HttpMethod.GET, "/api/medicines").access("hasRole('ROLE_DOCTOR') or hasRole('ROLE_NURSE')")
+                .antMatchers(HttpMethod.GET, "/api/medicine-bill").access("hasRole('ROLE_NURSE')")
+                .antMatchers(HttpMethod.GET, "/api/bill").access("hasRole('ROLE_NURSE')")
+
+
                 .antMatchers(HttpMethod.POST, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_PATIENT')")
                 .antMatchers(HttpMethod.DELETE, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_PATIENT')").and()
+
+                
 
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());

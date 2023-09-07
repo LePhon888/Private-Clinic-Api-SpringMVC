@@ -2,17 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.clinic.service;
+package com.clinic.repository;
 
-import com.clinic.pojo.Medicine;
+import com.clinic.pojo.ReportDetail;
 import java.util.List;
 import java.util.Map;
 
 /**
  *
- * @author admin
+ * @author hp
  */
-public interface MedicineService {
-    List<Medicine> getAllMedicine(Map<String, String> params);
-
+public interface ReportDetailRepository {
+    List<ReportDetail> getReportDetailByReport(Map<String, Object> params);
 }

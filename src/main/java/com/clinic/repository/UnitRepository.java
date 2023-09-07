@@ -4,7 +4,7 @@
  */
 package com.clinic.repository;
 
-import com.clinic.pojo.MedicalReport;
+import com.clinic.pojo.Unit;
 import java.util.List;
 import java.util.Map;
 
@@ -12,9 +12,7 @@ import java.util.Map;
  *
  * @author admin
  */
-public interface MedicalReportRepository {
-    List<MedicalReport> getMedicalReports(Map<String, String> params);
-    MedicalReport getMedicalReportById(int id);
-    Boolean updatePaid(Map<String,String> params);
-    boolean create(Map<String, Object> object);
+public interface UnitRepository {
+    Unit getUnitById(int id);
+    List<Unit> getUnits(Map<String, String> params);
 }

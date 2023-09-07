@@ -18,6 +18,9 @@
             <span class="visually-hidden">Loading...</span>
         </div>
     </div>
+     <div id="warning" class="alert alert-danger my-4" role="alert" style="display:none">
+      Không có dữ liệu
+    </div>
     <canvas id="myChart"></canvas>
 </div>
 <br/>
@@ -51,75 +54,86 @@
         }
 
         updating = true;
-        document.getElementById('spinner').style.display = 'block';
+        const update = async () => {
+            document.getElementById('spinner').style.display = 'block';
+            document.getElementById('warning').style.display = 'none';
 
-        labels = [];
-        values = [];
+            labels = [];
+            values = [];
 
-        let preLabel;
-        switch (selectedTime) { 
-            case 'month':
-                preLabel = 'Tháng ';
-                break;
-            case 'quarter':
-                preLabel = 'Quý ';
-                break;
-            case 'year':
-                preLabel = 'Năm ';
-                break;
-            default:
-                preLabel = ''; 
-        }
-
-        const yearSelect = document.getElementById('yearSelect');
-        const selectedYear = yearSelect.value;
-
-        let fetchDataUrl = "/Clinic/api/count-patient?time=" + selectedTime;
-        if (selectedYear) {
-            fetchDataUrl += "&year=" + selectedYear;
-        }
-
-        const res = await axios.get(fetchDataUrl);
-        const data = res.data;
-        
-        console.log(selectedTime);
-        console.log(res.data);
-
-        
-        const dataMap = {};
-
-        for (let i = 0; i < data.length; i++) {
-            const key = preLabel + data[i][0];
-            const value = data[i][1];
-            dataMap[key] = value;
-        }
-
-        if (selectedTime === 'month') {
-            for (let i = 1; i <= 12; i++) {
-                const monthLabel = preLabel + i;
-                labels.push(monthLabel);
-                values.push(dataMap[monthLabel] || 0);
+            let preLabel;
+            switch (selectedTime) { 
+                case 'month':
+                    preLabel = 'Tháng ';
+                    break;
+                case 'quarter':
+                    preLabel = 'Quý ';
+                    break;
+                case 'year':
+                    preLabel = 'Năm ';
+                    break;
+                default:
+                    preLabel = ''; 
             }
-        } else if (selectedTime === 'quarter') {
-            for (let i = 1; i <= 4; i++) {
-                const quarterLabel = preLabel + i;
-                labels.push(quarterLabel);
-                values.push(dataMap[quarterLabel] || 0); 
+
+            const yearSelect = document.getElementById('yearSelect');
+            const selectedYear = yearSelect.value;
+
+            let fetchDataUrl = "/Clinic/api/count-patient?time=" + selectedTime;
+            if (selectedYear) {
+                fetchDataUrl += "&year=" + selectedYear;
             }
-        } else {
-            labels.push(preLabel + selectedYear);
-            values.push(dataMap[preLabel + selectedYear] || 0);
+
+            try {
+
+
+                const res = await axios.get(fetchDataUrl);
+                const data = res.data;
+
+                console.log(selectedTime);
+                console.log(res.data);
+
+
+                const dataMap = {};
+
+                for (let i = 0; i < data.length; i++) {
+                    const key = preLabel + data[i][0];
+                    const value = data[i][1];
+                    dataMap[key] = value;
+                }
+
+                if (selectedTime === 'month') {
+                    for (let i = 1; i <= 12; i++) {
+                        const monthLabel = preLabel + i;
+                        labels.push(monthLabel);
+                        values.push(dataMap[monthLabel] || 0);
+                    }
+                } else if (selectedTime === 'quarter') {
+                    for (let i = 1; i <= 4; i++) {
+                        const quarterLabel = preLabel + i;
+                        labels.push(quarterLabel);
+                        values.push(dataMap[quarterLabel] || 0); 
+                    }
+                } else {
+                    labels.push(preLabel + selectedYear);
+                    values.push(dataMap[preLabel + selectedYear] || 0);
+                }
+            } catch (error) {
+                document.getElementById('warning').style.display = 'block';
+                console.error("Error fetching data:", error);
+            }
+
+
+            document.getElementById('spinner').style.display = 'none';
+
+            myChart.data.labels = labels;
+            myChart.data.datasets[0].data = values;
+            myChart.update();
+
+            updating = false; 
         }
-
-        document.getElementById('spinner').style.display = 'none';
-
-        myChart.data.labels = labels;
-        myChart.data.datasets[0].data = values;
-        myChart.update();
-
-        updating = false; 
+        update();
     }
-
     var ctx1 = document.getElementById('myChart').getContext('2d');
 
     var myChart = new Chart(ctx1, {

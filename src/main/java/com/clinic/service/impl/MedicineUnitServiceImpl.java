@@ -20,9 +20,10 @@ public class MedicineUnitServiceImpl implements MedicineUnitService{
     @Autowired
     private MedicineUnitRepository medicineUnitRepository;
 
+
     @Override
-    public List<MedicineUnit> getAllMedicineUnit() {
-        return this.medicineUnitRepository.getAllMedicineUnit();
+    public List<MedicineUnit> getAllMedicineUnit(java.util.Map<String, String> object) {
+        return this.medicineUnitRepository.getAllMedicineUnit(object);    
     }
     
 }

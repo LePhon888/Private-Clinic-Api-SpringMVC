@@ -2,6 +2,7 @@ com\clinic\configs\SecurityWebApplicationInitializer.class
 com\clinic\repository\MedicineRepository.class
 com\clinic\controllers\ApiScheduleDetailController.class
 com\clinic\pojo\Bill_.class
+com\clinic\repository\UnitRepository.class
 com\clinic\service\impl\NurseShiftServiceImpl.class
 com\clinic\pojo\Admin_.class
 com\clinic\pojo\Doctor.class
@@ -15,8 +16,10 @@ com\clinic\controllers\UserController.class
 com\clinic\repository\impl\CategoryRepositoryImpl.class
 com\clinic\repository\NurseShiftRepository.class
 com\clinic\components\JwtService.class
+com\clinic\controllers\ApiReportDetailController.class
 com\clinic\service\UserService.class
 com\clinic\repository\MedicalReportRepository.class
+com\clinic\service\impl\ReportDetailServiceImpl.class
 com\clinic\configs\SpringSecurityConfig.class
 com\clinic\pojo\Doctor_.class
 com\clinic\configs\CorsConfig.class
@@ -57,11 +60,13 @@ com\clinic\configs\HibernateConfig.class
 com\clinic\service\MedicineUnitService.class
 com\clinic\controllers\IndexController.class
 com\clinic\pojo\MedicineUnit_.class
+com\clinic\service\impl\Map.class
 com\clinic\repository\impl\DoctorShiftRepositoryImpl.class
 com\clinic\service\NurseService.class
 com\clinic\service\CategoryService.class
 com\clinic\service\impl\MedicalReportServiceImpl.class
 com\clinic\service\BillService.class
+com\clinic\service\ReportDetailService.class
 com\clinic\repository\impl\StatsRepositoryImpl.class
 com\clinic\service\impl\NurseServiceImpl.class
 com\clinic\pojo\Category_.class
@@ -105,6 +110,7 @@ com\clinic\controllers\ApiMedicineController.class
 com\clinic\repository\MedicineUnitRepository.class
 com\clinic\pojo\ScheduleDetail_.class
 com\clinic\pojo\User_.class
+com\clinic\repository\impl\UnitRepositoryImpl.class
 com\clinic\repository\HourRepository.class
 com\clinic\repository\impl\RegulationRepositoryImpl.class
 com\clinic\repository\NurseRepository.class
@@ -112,8 +118,10 @@ com\clinic\repository\PatientRepository.class
 com\clinic\pojo\MedicineUnit.class
 com\clinic\pojo\Patient_.class
 com\clinic\pojo\Hour_.class
+com\clinic\service\impl\UnitServiceImpl.class
 com\clinic\pojo\MedicalReport.class
 com\clinic\service\impl\ScheduleDetailServiceImpl.class
+com\clinic\repository\ReportDetailRepository.class
 com\clinic\pojo\ReportDetail.class
 com\clinic\service\HourService.class
 com\clinic\repository\DepartmentRepository.class
@@ -122,10 +130,13 @@ com\clinic\controllers\ApiUserController.class
 com\clinic\controllers\ApiDoctorController.class
 com\clinic\pojo\Hour.class
 com\clinic\service\impl\MedicineServiceImpl.class
+com\clinic\repository\impl\ReportDetailRepositoryImpl.class
 com\clinic\repository\impl\MedicalReportRepositoryImpl.class
+com\clinic\controllers\ApiUnitController.class
 com\clinic\service\MedicineService.class
 com\clinic\service\impl\CategoryServiceImpl.class
 com\clinic\repository\BillRepository.class
 com\clinic\pojo\Department_.class
+com\clinic\service\UnitService.class
 com\clinic\service\impl\DoctorShiftServiceImpl.class
 com\clinic\service\MedicalReportService.class

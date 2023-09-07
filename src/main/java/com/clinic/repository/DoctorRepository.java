@@ -15,6 +15,7 @@ import java.util.Map;
 public interface DoctorRepository {
     List<Doctor> getDoctorByDepartmentId(Map<String, String> params);
     Doctor getDoctorById(int id);
+    Doctor getDoctorByUserId(int id);
     Boolean createDoctor(Doctor doctor);
     Boolean updateDoctor(Doctor doctor);
     Boolean deleteDoctor(int id);

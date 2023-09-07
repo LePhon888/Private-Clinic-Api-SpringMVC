@@ -30,5 +30,10 @@ public class MedicalReportServiceImpl implements MedicalReportService{
     public Boolean updatePaid(Map<String, String> params) {
         return this.medicalReportRepository.updatePaid(params);
     }
+    
+    @Override
+    public boolean create(Map<String, Object> object) {
+        return this.medicalReportRepository.create(object);
+    }
 
 }

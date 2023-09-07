@@ -4,12 +4,11 @@
  */
 package com.clinic.controllers;
 
-import com.clinic.pojo.Medicine;
-import com.clinic.service.MedicineService;
+import com.clinic.pojo.Unit;
+import com.clinic.service.UnitService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.server.Http2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,17 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author admin
+ * @author hp
  */
 @RestController
 @RequestMapping("/api")
-public class ApiMedicineController {
+public class ApiUnitController {
     @Autowired
-    private MedicineService medicineService;
+    private UnitService unitService;
     
     @CrossOrigin
-    @GetMapping("/medicines/")
-    public ResponseEntity<List<Medicine>> getAllMedicine(@RequestParam Map<String, String> params) {
-        return new ResponseEntity<>(this.medicineService.getAllMedicine(params), HttpStatus.OK);
+    @GetMapping("/units/")
+    public ResponseEntity<List<Unit>> getUnits(@RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(this.unitService.getUnits(params), HttpStatus.OK);
     }
+    
 }
