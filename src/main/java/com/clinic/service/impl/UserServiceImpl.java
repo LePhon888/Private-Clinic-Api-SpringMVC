@@ -103,4 +103,14 @@ public class UserServiceImpl implements UserService {
         return u;
     }
 
+    @Override
+    public User getUserByEmail(Map<String, String> params) {
+        return this.userRepo.getUserByEmail(params);
+    }
+
+    @Override
+    public User getUserByPhoneNumber(Map<String, String> params) {
+        return this.userRepo.getUserByPhoneNumber(params);
+    }
+
 }

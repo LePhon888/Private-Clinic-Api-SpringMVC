@@ -45,9 +45,31 @@ public class ApiUserController {
 //        return Collections.singletonMap("name", principal.getAttribute("name"));
 //    }
     
-    @GetMapping("/users/getByName")
+    @GetMapping("/user/getByName")
     public ResponseEntity<User> getUserByName(@RequestParam String name) {
         User user = this.userService.getUserByName(name);
+
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    @GetMapping("/user/get-by-email")
+    public ResponseEntity<User> getUserByName(@RequestParam Map<String, String> email) {
+        User user = this.userService.getUserByEmail(email);
+
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+    
+     @GetMapping("/user/get-by-phonenumber")
+    public ResponseEntity<User> getUserByPhoneNumber(@RequestParam Map<String, String> phoneNumber) {
+        User user = this.userService.getUserByEmail(phoneNumber);
 
         if (user != null) {
             return new ResponseEntity<>(user, HttpStatus.OK);

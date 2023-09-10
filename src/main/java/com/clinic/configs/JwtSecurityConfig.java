@@ -65,6 +65,7 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().ignoringAntMatchers("/api/**");
         http.authorizeRequests().antMatchers("/api/login/").permitAll();
         http.authorizeRequests().antMatchers("/api/users/").permitAll();
+        http.authorizeRequests().antMatchers("/api/user/").permitAll();
         http.authorizeRequests().antMatchers("/api/departments/").permitAll();
 
         http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
@@ -96,9 +97,6 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
                 .access("hasRole('ROLE_PATIENT')")
                 .antMatchers(HttpMethod.POST, "/api/schedule-details/")
                 .access("hasRole('ROLE_PATIENT') or hasRole('ROLE_NURSE')")
-                
-                .antMatchers(HttpMethod.GET, "/api/schedule-details/")
-                .access("hasRole('ROLE_NURSE')")
                 
                 .antMatchers(HttpMethod.GET, "/api/schedule-details/count").access("hasRole('ROLE_PATIENT') or hasRole('ROLE_NURSE')")
                 .antMatchers(HttpMethod.PATCH, "/api/schedule-details/cancel/**").access("hasRole('ROLE_PATIENT')")

@@ -19,6 +19,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.clinic.repository.UserRepository;
+import java.util.Map;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
@@ -113,6 +114,53 @@ public class UserRepositoryImpl implements UserRepository {
         
         return this.passEncoder.matches(password, u.getPassword());
 
+    }
+    
+
+    @Override
+    public User getUserByEmail(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<User> q = b.createQuery(User.class);
+        Root<User> root = q.from(User.class);
+        q.select(root);
+
+        try {
+            String email = params.get("email");
+            if (email != null && !email.isEmpty()) {
+                Predicate predicate = b.equal(root.get("email"), email.trim());
+                q.where(predicate);
+                Query<User> query = s.createQuery(q);
+                return query.getSingleResult();
+            }
+            return null;
+        } catch (NoResultException e) {
+            return null; 
+        }    
+    }
+
+    @Override
+    public User getUserByPhoneNumber(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<User> q = b.createQuery(User.class);
+        Root<User> root = q.from(User.class);
+        q.select(root);
+
+        try {
+            String phoneNumber = params.get("phoneNumber");
+            if (phoneNumber != null && !phoneNumber.isEmpty()) {
+                Predicate predicate = b.equal(root.get("phoneNumber"), phoneNumber.trim());
+                q.where(predicate);
+                Query<User> query = s.createQuery(q);
+                return query.getSingleResult();
+            }
+            return null;
+        } catch (NoResultException e) {
+            return null; 
+        } 
     }
 
 }

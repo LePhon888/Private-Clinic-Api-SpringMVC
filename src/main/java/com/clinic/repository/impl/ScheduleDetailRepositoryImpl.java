@@ -173,7 +173,7 @@ public class ScheduleDetailRepositoryImpl implements ScheduleDetailRepository {
             scheduleDetail.setDoctorId(doctor);
             scheduleDetail.setHourId(hour);
             Short isCancel = 0;
-            Short isConfirm = 0;
+            Short isConfirm = -1;
             scheduleDetail.setIsCancel(isCancel);
             scheduleDetail.setIsConfirm(isConfirm);
             scheduleDetail.setRegisterPatient(newPatient);

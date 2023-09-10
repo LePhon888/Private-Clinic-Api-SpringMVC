@@ -5,6 +5,7 @@
 package com.clinic.repository;
 
 import com.clinic.pojo.User;
+import java.util.Map;
 
 /**
  *
@@ -13,6 +14,8 @@ import com.clinic.pojo.User;
 public interface UserRepository {
     User getUserByName(String name);
     User getUserByUsername(String username);
+    User getUserByEmail(Map<String, String> params);
+    User getUserByPhoneNumber(Map<String, String> params);
     User getUserById(int id);
     User createUser(User user);
     boolean authUser(String username, String password);
